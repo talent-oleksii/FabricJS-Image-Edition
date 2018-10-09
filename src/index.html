@@ -9,7 +9,7 @@
   <!-- We can create a button to manipulate an object in the canvas -->
   <input id="buttonR" type="button" value="Shift Right">
   <input id="buttonL" type="button" value="Shift Left">
-  <input id="sepia" type="button" value="Sepia-fy the Bongo Cat">
+  <input id="sepia" type="button" value="Sepia-fy">
 
   <!-- Create a new canvas with Fabric and add objects to it -->
   <script>
@@ -25,7 +25,7 @@
     });
 
     // Add our image from URL onto canvas
-    fabric.Image.fromURL('bongo.jpg', function(aImg) {
+    fabric.Image.fromURL('img/bongo.jpg/', function(aImg) {
       // Scale down our image size
       aImg.scale(0.5);
       canvas.add(aImg);
@@ -46,11 +46,10 @@
       canvas.renderAll(); // Re-renders canvas
     });
 
-    // Sepia-fies our Bongo Cat
+    // Sepia-fies our active object (clicked object)
     $("#sepia").click(function(){
       var filter = new fabric.Image.filters.Sepia();
       var activeObj = canvas.getActiveObject();
-      activeObj.crossOrigin = "anonymous";
       activeObj.filters.push(filter);
       activeObj.applyFilters();
       canvas.renderAll();
