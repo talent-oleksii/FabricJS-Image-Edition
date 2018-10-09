@@ -1,0 +1,61 @@
+<html>
+<head>
+  <script src="jquery.min.js"></script>
+  <script src="fabric.min.js"></script>
+</head>
+<body>
+  <!-- Create a canvas for our work area -->
+  <canvas id="c" width="1000" height="800"></canvas>
+  <!-- We can create a button to manipulate an object in the canvas -->
+  <input id="buttonR" type="button" value="Shift Right">
+  <input id="buttonL" type="button" value="Shift Left">
+  <input id="sepia" type="button" value="Sepia-fy the Bongo Cat">
+
+  <!-- Create a new canvas with Fabric and add objects to it -->
+  <script>
+    var canvas = new fabric.Canvas('c');
+
+    // Shape properties can be specified in JSON format
+    var rect = new fabric.Rect({
+      left: 200,
+      top: 250,
+      fill: 'blue',
+      width: 200,
+      height: 200
+    });
+
+    // Add our image from URL onto canvas
+    fabric.Image.fromURL('bongo.jpg', function(aImg) {
+      // Scale down our image size
+      aImg.scale(0.5);
+      canvas.add(aImg);
+    });
+
+    // Add our objects to the canvas
+    canvas.add(rect);
+
+    // JQuery to handle button, shifts rect object
+    $("#buttonR").click(function(){
+      // Adds px to the left of rect
+      rect.set('left', rect.get('left') + 10);
+      canvas.renderAll(); // Re-renders canvas
+    });
+    $("#buttonL").click(function(){
+      // Subtracts px to the left of rect
+      rect.set('left', rect.get('left') - 10);
+      canvas.renderAll(); // Re-renders canvas
+    });
+
+    // Sepia-fies our Bongo Cat
+    $("#sepia").click(function(){
+      var filter = new fabric.Image.filters.Sepia();
+      var activeObj = canvas.getActiveObject();
+      activeObj.crossOrigin = "anonymous";
+      activeObj.filters.push(filter);
+      activeObj.applyFilters();
+      canvas.renderAll();
+    });
+
+  </script>
+</body>
+</html>
