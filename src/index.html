@@ -6,10 +6,11 @@
 <body>
   <!-- Create a canvas for our work area -->
   <canvas id="c" width="1000" height="800"></canvas>
-  <!-- We can create a button to manipulate an object in the canvas -->
+  <!-- We can create buttons to manipulate an object in the canvas -->
   <input id="buttonR" type="button" value="Shift Right">
   <input id="buttonL" type="button" value="Shift Left">
   <input id="sepia" type="button" value="Sepia-fy">
+  <input id="rotate" type="button" value="Rotate Current Object"
 
   <!-- Create a new canvas with Fabric and add objects to it -->
   <script>
@@ -53,6 +54,17 @@
       activeObj.filters.push(filter);
       activeObj.applyFilters();
       canvas.renderAll();
+    });
+
+    // Animates our active object with a 360 degree rotation
+    // Our easing type is what allows the object to bounce at the end
+    $("#rotate").click(function(){
+      var activeObj = canvas.getActiveObject();
+      activeObj.animate('angle', '+=360', {
+        onChange: canvas.renderAll.bind(canvas),
+        duration: 2500,
+        easing: fabric.util.ease.easeOutBounce
+      });
     });
 
   </script>
